@@ -21,7 +21,7 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="{% url 'add_news' %}">Add news</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>
@@ -34,7 +34,11 @@
             </div>
           </nav>
           <div class="card mb-3">
-            <img src="{{ new.photo.url }}" class="card-img-top" alt="...">
+            {% if i.photo %}
+            <img src="{{ i.photo.url }}" alt="" width="300px" style="margin-top: 10px; margin-bottom: 10px; border-radius: 20%; height: 220px">
+            {% else %}
+                <p>Rasm yoq</p>
+              {% endif %}
             <div class="card-body">
               <h5 class="card-title">{{new.title}}</h5>
               <p class="card-text">{{new.context}}</p>

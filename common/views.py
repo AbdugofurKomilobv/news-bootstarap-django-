@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
+from common.forms import NewsForm
+from django.middleware.csrf import get_token
 from .models import *
 
 
@@ -32,3 +34,17 @@ def new_about(request,new_id):
     }
 
     return render(request=request,template_name='new_about.html',context=context)
+
+
+
+def add_news(request):
+    print("token = =",get_token(request))
+    if request.method == "POST":
+        form = NewsForm(request.POST)
+        if form.is_valid():
+            news = News.objects.create(**form.cleaned_data)
+            news.save()
+            return redirect('home')
+    else:
+        form = NewsForm()
+    return render(request=request,template_name='add_new.html',context={'form':form})
